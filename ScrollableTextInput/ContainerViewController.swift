@@ -35,6 +35,8 @@ extension ContainerViewController: InputViewControllerDelegate {
 	func didUpdateHeight(for input: InputViewController, height: CGFloat) {
 		if input == titleInput {
 			titleHeight.constant = height
+		} else if input == detailInput {
+			detailHeight.constant = height
 		}
 	}
 }

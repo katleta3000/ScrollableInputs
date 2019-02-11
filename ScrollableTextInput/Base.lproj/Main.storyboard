@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="JGi-gs-I30">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="164"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="264"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrS-iN-Ahv">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
@@ -33,8 +33,17 @@
                                                     <segue destination="hWh-gF-HvV" kind="embed" identifier="Title" id="ay4-b6-jS2"/>
                                                 </connections>
                                             </containerView>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmg-fn-XrJ">
+                                                <rect key="frame" x="0.0" y="100" width="375" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="HHC-mX-bca"/>
+                                                </constraints>
+                                                <connections>
+                                                    <segue destination="Z0L-Od-xE6" kind="embed" identifier="Detail" id="jyI-vh-4Ff"/>
+                                                </connections>
+                                            </containerView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xes-Lj-cJU">
-                                                <rect key="frame" x="0.0" y="100" width="375" height="64"/>
+                                                <rect key="frame" x="0.0" y="200" width="375" height="64"/>
                                                 <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="64" id="Adl-SG-Ri2"/>
@@ -43,10 +52,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="xes-Lj-cJU" secondAttribute="trailing" id="9ID-rc-tYX"/>
-                                            <constraint firstAttribute="trailing" secondItem="VrS-iN-Ahv" secondAttribute="trailing" id="dTk-8g-787"/>
-                                            <constraint firstItem="VrS-iN-Ahv" firstAttribute="top" secondItem="JGi-gs-I30" secondAttribute="top" id="qin-ce-hFU"/>
                                             <constraint firstItem="xes-Lj-cJU" firstAttribute="leading" secondItem="JGi-gs-I30" secondAttribute="leading" id="sgc-px-Lu5"/>
-                                            <constraint firstItem="VrS-iN-Ahv" firstAttribute="leading" secondItem="JGi-gs-I30" secondAttribute="leading" id="xRE-qB-iNk"/>
                                         </constraints>
                                         <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                     </stackView>
@@ -72,6 +78,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="detailHeight" destination="HHC-mX-bca" id="ndQ-Al-dhn"/>
                         <outlet property="titleHeight" destination="QvV-wd-4f3" id="GWI-X5-zL0"/>
                     </connections>
                 </viewController>
@@ -113,7 +120,43 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1z-Li-2ml" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="-292.35382308845578"/>
+            <point key="canvasLocation" x="988" y="-228"/>
+        </scene>
+        <!--Input View Controller-->
+        <scene sceneID="rsF-J4-kaN">
+            <objects>
+                <viewController id="Z0L-Od-xE6" customClass="InputViewController" customModule="ScrollableTextInput" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i96-O1-7Rt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fa4-PU-fOd">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Z0L-Od-xE6" id="JGv-5c-Rlv"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fa4-PU-fOd" firstAttribute="leading" secondItem="i96-O1-7Rt" secondAttribute="leading" id="Ugw-2M-Uwa"/>
+                            <constraint firstItem="fa4-PU-fOd" firstAttribute="top" secondItem="i96-O1-7Rt" secondAttribute="top" id="c1W-nf-8BS"/>
+                            <constraint firstAttribute="trailing" secondItem="fa4-PU-fOd" secondAttribute="trailing" id="qP6-aX-h8N"/>
+                            <constraint firstAttribute="bottom" secondItem="fa4-PU-fOd" secondAttribute="bottom" id="tAN-yi-Onx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Zah-sG-QQu"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="fa4-PU-fOd" id="sZH-n8-SsG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wsE-rc-1lJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="988" y="26"/>
         </scene>
     </scenes>
 </document>
