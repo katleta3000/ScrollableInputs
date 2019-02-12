@@ -30,17 +30,20 @@ extension ContainerViewController {
 		}
 		destination.delegate = self
 	}
+	
+	override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+		super.preferredContentSizeDidChange(forChildContentContainer: container)
+		
+		let height = container.preferredContentSize.height
+		if container.isEqual(titleInput) {
+			titleHeight.constant = height
+		} else if container.isEqual(detailInput) {
+			detailHeight.constant = height
+		}
+	}	
 }
 
 extension ContainerViewController: InputViewControllerDelegate {
-	
-	func didUpdateHeight(for input: InputViewController, height: CGFloat) {
-		if input == titleInput {
-			titleHeight.constant = height
-		} else if input == detailInput {
-			detailHeight.constant = height
-		}
-	}
 	
 	func didBecomeActive(input: InputViewController) {
 		UIView.animate(withDuration: 0.25) {

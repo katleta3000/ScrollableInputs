@@ -9,7 +9,6 @@
 import UIKit
 
 protocol InputViewControllerDelegate: class {
-	func didUpdateHeight(for input: InputViewController, height: CGFloat)
 	func didBecomeActive(input: InputViewController)
 	func didResignActive(input: InputViewController)
 }
@@ -23,12 +22,11 @@ final class InputViewController: UIViewController {
 		textView.font = UIFont.systemFont(ofSize: 48)
 		textView.text = "Input your value here"
 		textView.isScrollEnabled = false
-		delegate?.didUpdateHeight(for: self, height: textHeight())
 	}
 	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		delegate?.didUpdateHeight(for: self, height: textHeight())
+		self.preferredContentSize = CGSize(width: view.bounds.size.width, height: textHeight())
 	}
 }
 
