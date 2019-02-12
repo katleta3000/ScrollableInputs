@@ -10,6 +10,8 @@ import UIKit
 
 protocol InputViewControllerDelegate: class {
 	func didUpdateHeight(for input: InputViewController, height: CGFloat)
+	func didBecomeActive(input: InputViewController)
+	func didResignActive(input: InputViewController)
 }
 
 final class InputViewController: UIViewController {
@@ -39,6 +41,14 @@ extension InputViewController: UITextViewDelegate {
 			return false
 		}
 		return true
+	}
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		delegate?.didBecomeActive(input: self)
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		delegate?.didResignActive(input: self)
 	}
 }
 

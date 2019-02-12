@@ -78,7 +78,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="bottomView" destination="xes-Lj-cJU" id="ZKF-2c-1yI"/>
                         <outlet property="detailHeight" destination="HHC-mX-bca" id="ndQ-Al-dhn"/>
+                        <outlet property="scrollView" destination="ueF-MH-aqv" id="9V7-PA-M9U"/>
                         <outlet property="titleHeight" destination="QvV-wd-4f3" id="GWI-X5-zL0"/>
                     </connections>
                 </viewController>
