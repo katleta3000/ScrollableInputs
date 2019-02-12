@@ -45,27 +45,24 @@ extension ContainerViewController {
 
 extension ContainerViewController: InputViewControllerDelegate {
 	
-	func didBecomeActive(input: InputViewController) {
+	private func updateViewsVisibility(with alpha: CGFloat, input: InputViewController) {
 		UIView.animate(withDuration: 0.25) {
 			if input == self.titleInput {
-				self.detailInput.view.alpha = 0
+				self.detailInput.view.alpha = alpha
 			} else if input == self.detailInput {
-				self.titleInput.view.alpha = 0
-				self.scrollView.contentInset = UIEdgeInsets(top: -self.titleHeight.constant, left: 0, bottom: 0, right: 0)
+				self.titleInput.view.alpha = alpha
+				let top = alpha == 0 ? -self.titleHeight.constant : 0
+				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
 			}
-			self.bottomView.alpha = 0
+			self.bottomView.alpha = alpha
 		}
 	}
 	
+	func didBecomeActive(input: InputViewController) {
+		updateViewsVisibility(with: 0, input: input)
+	}
+	
 	func didResignActive(input: InputViewController) {
-		UIView.animate(withDuration: 0.25) {
-			if input == self.titleInput {
-				self.detailInput.view.alpha = 1
-			} else if input == self.detailInput {
-				self.titleInput.view.alpha = 1
-				self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-			}
-			self.bottomView.alpha = 1
-		}
+		updateViewsVisibility(with: 1, input: input)
 	}
 }
