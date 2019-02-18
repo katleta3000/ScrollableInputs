@@ -8,14 +8,8 @@
 
 import UIKit
 
-protocol InputViewControllerDelegate: class {
-	func didBecomeActive(input: InputViewController)
-	func didResignActive(input: InputViewController)
-}
-
 final class InputViewController: UIViewController {
 	@IBOutlet weak var textView: UITextView!
-	weak var delegate: InputViewControllerDelegate?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -28,6 +22,10 @@ final class InputViewController: UIViewController {
 		super.viewDidLayoutSubviews()
 		self.preferredContentSize = CGSize(width: view.bounds.size.width, height: textHeight())
 	}
+	
+	func isActive() -> Bool {
+		return textView.isFirstResponder
+	}
 }
 
 extension InputViewController: UITextViewDelegate {
@@ -39,14 +37,6 @@ extension InputViewController: UITextViewDelegate {
 			return false
 		}
 		return true
-	}
-	
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		delegate?.didBecomeActive(input: self)
-	}
-	
-	func textViewDidEndEditing(_ textView: UITextView) {
-		delegate?.didResignActive(input: self)
 	}
 }
 

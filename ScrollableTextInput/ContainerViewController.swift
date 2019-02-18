@@ -16,6 +16,8 @@ final class ContainerViewController: UIViewController {
 	
 	private weak var titleInput: InputViewController!
 	private weak var detailInput: InputViewController!
+	
+	private var keyboardHeight: CGFloat = 0
 }
 
 extension ContainerViewController {
@@ -28,7 +30,6 @@ extension ContainerViewController {
 		} else if identifier == "Detail" {
 			detailInput = destination
 		}
-		destination.delegate = self
 	}
 	
 	override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
@@ -40,29 +41,79 @@ extension ContainerViewController {
 		} else if container.isEqual(detailInput) {
 			detailHeight.constant = height
 		}
-	}	
+		updateScrollPosition()
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		NotificationCenter.default.addObserver(
+			self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil
+		)
+	}
 }
 
-extension ContainerViewController: InputViewControllerDelegate {
+extension ContainerViewController {
 	
-	private func updateViewsVisibility(with alpha: CGFloat, input: InputViewController) {
-		UIView.animate(withDuration: 0.25) {
-			if input == self.titleInput {
-				self.detailInput.view.alpha = alpha
-			} else if input == self.detailInput {
-				self.titleInput.view.alpha = alpha
-				let top = alpha == 0 ? -self.titleHeight.constant : 0
-				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
-			}
-			self.bottomView.alpha = alpha
+	@objc func keyboardWillShow(notification: NSNotification) {
+		guard let keyboard = try? keyboardData(notification: notification) else { return }
+		
+		var top: CGFloat = 0
+		if detailInput.isActive() {
+			top = -self.titleHeight.constant
+		}
+		UIView.animate(withDuration: keyboard.duration) {
+			self.updateViewsVisibility(isInputing: true)
+			self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: keyboard.height, right: 0)
 		}
 	}
 	
-	func didBecomeActive(input: InputViewController) {
-		updateViewsVisibility(with: 0, input: input)
+	@objc func keyboardWillHide(notification: NSNotification) {
+		guard let keyboard = try? keyboardData(notification: notification) else { return }
+		keyboardHeight = keyboard.height
+		
+		UIView.animate(withDuration: keyboard.duration) {
+			self.updateViewsVisibility()
+			self.scrollView.contentInset = UIEdgeInsets()
+		}
 	}
 	
-	func didResignActive(input: InputViewController) {
-		updateViewsVisibility(with: 1, input: input)
+	enum KeyboardDataError: Error {
+		case noFrame
+	}
+	
+	private func keyboardData(notification: NSNotification) throws -> (height: CGFloat, duration: Double) {
+		guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { throw KeyboardDataError.noFrame }
+		var animationDuration = 0.0
+		if let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
+			animationDuration = duration
+		}
+		let rect = keyboardFrame.cgRectValue
+		return (rect.size.height, animationDuration)
+	}
+}
+
+private extension ContainerViewController {
+	
+	func updateViewsVisibility(isInputing: Bool = false) {
+		if titleInput.isActive() && isInputing {
+			bottomView.alpha = 0
+			titleInput.view.alpha = 1
+			detailInput.view.alpha = 0
+		} else if detailInput.isActive() && isInputing {
+			bottomView.alpha = 0
+			titleInput.view.alpha = 0
+			detailInput.view.alpha = 1
+		} else {
+			bottomView.alpha = 1
+			titleInput.view.alpha = 1
+			detailInput.view.alpha = 1
+		}
+	}
+	
+	func updateScrollPosition() {
+		print(keyboardHeight)
 	}
 }
