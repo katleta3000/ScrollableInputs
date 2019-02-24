@@ -13,7 +13,6 @@
 		A8EF9D9A220CBF240066DF94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8EF9D98220CBF240066DF94 /* Main.storyboard */; };
 		A8EF9D9C220CBF260066DF94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8EF9D9B220CBF260066DF94 /* Assets.xcassets */; };
 		A8EF9D9F220CBF260066DF94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8EF9D9D220CBF260066DF94 /* LaunchScreen.storyboard */; };
-		A8EF9DA7220CC0B30066DF94 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EF9DA6220CC0B30066DF94 /* InputViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		A8EF9D9B220CBF260066DF94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8EF9D9E220CBF260066DF94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8EF9DA0220CBF260066DF94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A8EF9DA6220CC0B30066DF94 /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 			children = (
 				A8EF9D94220CBF240066DF94 /* AppDelegate.swift */,
 				A8EF9D96220CBF240066DF94 /* ContainerViewController.swift */,
-				A8EF9DA6220CC0B30066DF94 /* InputViewController.swift */,
 				A8BDC9C7221B51AE00381423 /* Keyboard.swift */,
 				A8EF9D98220CBF240066DF94 /* Main.storyboard */,
 				A8EF9D9B220CBF260066DF94 /* Assets.xcassets */,
@@ -141,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8EF9DA7220CC0B30066DF94 /* InputViewController.swift in Sources */,
 				A8EF9D97220CBF240066DF94 /* ContainerViewController.swift in Sources */,
 				A8BDC9C8221B51AE00381423 /* Keyboard.swift in Sources */,
 				A8EF9D95220CBF240066DF94 /* AppDelegate.swift in Sources */,
