@@ -20,45 +20,49 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ueF-MH-aqv">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrS-iN-Ahv">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="QvV-wd-4f3"/>
-                                        </constraints>
-                                        <connections>
-                                            <segue destination="hWh-gF-HvV" kind="embed" identifier="Title" id="ay4-b6-jS2"/>
-                                        </connections>
-                                    </containerView>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmg-fn-XrJ">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="HHC-mX-bca"/>
-                                        </constraints>
-                                        <connections>
-                                            <segue destination="Z0L-Od-xE6" kind="embed" identifier="Detail" id="jyI-vh-4Ff"/>
-                                        </connections>
-                                    </containerView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xes-Lj-cJU">
-                                        <rect key="frame" x="0.0" y="200" width="375" height="64"/>
-                                        <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="64" id="Adl-SG-Ri2"/>
-                                        </constraints>
-                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1Me-ta-IBt">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YQu-3e-ABo">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                                <subviews>
+                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VrS-iN-Ahv">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="100" id="QvV-wd-4f3"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <segue destination="hWh-gF-HvV" kind="embed" identifier="Title" id="ay4-b6-jS2"/>
+                                                        </connections>
+                                                    </containerView>
+                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmg-fn-XrJ">
+                                                        <rect key="frame" x="0.0" y="100" width="375" height="100"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="100" id="HHC-mX-bca"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <segue destination="Z0L-Od-xE6" kind="embed" identifier="Detail" id="jyI-vh-4Ff"/>
+                                                        </connections>
+                                                    </containerView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xes-Lj-cJU">
+                                                        <rect key="frame" x="0.0" y="200" width="375" height="0.0"/>
+                                                        <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" id="Adl-SG-Ri2"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="vmg-fn-XrJ" secondAttribute="trailing" id="9Ba-qr-hHQ"/>
-                                    <constraint firstItem="xes-Lj-cJU" firstAttribute="top" secondItem="vmg-fn-XrJ" secondAttribute="bottom" id="Cc2-eU-UzI"/>
-                                    <constraint firstItem="VrS-iN-Ahv" firstAttribute="top" secondItem="ueF-MH-aqv" secondAttribute="top" id="G3J-EC-hxa"/>
-                                    <constraint firstItem="xes-Lj-cJU" firstAttribute="leading" secondItem="ueF-MH-aqv" secondAttribute="leading" id="JR3-ei-ts5"/>
-                                    <constraint firstItem="VrS-iN-Ahv" firstAttribute="leading" secondItem="ueF-MH-aqv" secondAttribute="leading" id="RYk-ie-f8s"/>
-                                    <constraint firstItem="vmg-fn-XrJ" firstAttribute="leading" secondItem="ueF-MH-aqv" secondAttribute="leading" id="WUG-gp-a1C"/>
-                                    <constraint firstAttribute="bottom" secondItem="xes-Lj-cJU" secondAttribute="bottom" priority="750" constant="383" id="bB6-zs-evZ"/>
-                                    <constraint firstItem="VrS-iN-Ahv" firstAttribute="centerX" secondItem="ueF-MH-aqv" secondAttribute="centerX" id="dbu-lK-U5P"/>
-                                    <constraint firstAttribute="trailing" secondItem="VrS-iN-Ahv" secondAttribute="trailing" id="j6L-tX-GNu"/>
-                                    <constraint firstItem="vmg-fn-XrJ" firstAttribute="top" secondItem="VrS-iN-Ahv" secondAttribute="bottom" id="mGe-nU-Kch"/>
-                                    <constraint firstAttribute="trailing" secondItem="xes-Lj-cJU" secondAttribute="trailing" id="mTB-63-jyz"/>
+                                    <constraint firstItem="1Me-ta-IBt" firstAttribute="centerX" secondItem="ueF-MH-aqv" secondAttribute="centerX" id="1Kt-we-FD0"/>
+                                    <constraint firstAttribute="bottom" secondItem="1Me-ta-IBt" secondAttribute="bottom" id="9Sc-DN-s2l"/>
+                                    <constraint firstItem="1Me-ta-IBt" firstAttribute="top" secondItem="ueF-MH-aqv" secondAttribute="top" id="Acf-TE-dIk"/>
+                                    <constraint firstAttribute="trailing" secondItem="1Me-ta-IBt" secondAttribute="trailing" id="J51-ff-d3s"/>
+                                    <constraint firstItem="1Me-ta-IBt" firstAttribute="leading" secondItem="ueF-MH-aqv" secondAttribute="leading" id="gUJ-yg-r4B"/>
                                 </constraints>
                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                             </scrollView>
@@ -73,6 +77,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="bottomHeight" destination="Adl-SG-Ri2" id="0a3-iz-tV5"/>
                         <outlet property="bottomView" destination="xes-Lj-cJU" id="ZKF-2c-1yI"/>
                         <outlet property="detailHeight" destination="HHC-mX-bca" id="ndQ-Al-dhn"/>
                         <outlet property="scrollView" destination="ueF-MH-aqv" id="9V7-PA-M9U"/>

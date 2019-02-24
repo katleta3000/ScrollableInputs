@@ -12,6 +12,7 @@ final class ContainerViewController: UIViewController {
 	@IBOutlet private weak var scrollView: UIScrollView!
 	@IBOutlet private weak var titleHeight: NSLayoutConstraint!
 	@IBOutlet private weak var detailHeight: NSLayoutConstraint!
+	@IBOutlet private weak var bottomHeight: NSLayoutConstraint!
 	@IBOutlet private weak var bottomView: UIView!
 	
 	private weak var titleInput: InputViewController!
@@ -33,16 +34,16 @@ extension ContainerViewController {
 		destination.delegate = self
 	}
 	
-//	override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
-//		super.preferredContentSizeDidChange(forChildContentContainer: container)
-//
-//		let height = container.preferredContentSize.height
-//		if container.isEqual(titleInput) {
-//			titleHeight.constant = keyboardHeight > 0 ? keyboardHeight : height
-//		} else if container.isEqual(detailInput) {
-//			detailHeight.constant = keyboardHeight > 0 ? keyboardHeight : height
-//		}
-//	}
+	override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+		super.preferredContentSizeDidChange(forChildContentContainer: container)
+
+		let height = container.preferredContentSize.height
+		if container.isEqual(titleInput) {
+			titleHeight.constant = height
+		} else if container.isEqual(detailInput) {
+			detailHeight.constant = height
+		}
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -58,12 +59,17 @@ extension ContainerViewController {
 extension ContainerViewController: InputViewControllerDelegate {
 	
 	func didBecomeActive(input: InputViewController) {
-		scrollView.isScrollEnabled = false
 		
 		if input.isEqual(detailInput) {
 			let top = -self.titleHeight.constant
 			UIView.animate(withDuration: 0.25) {
 				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
+			}
+		} else if input.isEqual(titleInput) {
+			let bottom: CGFloat = 0
+			UIView.animate(withDuration: 0.25) {
+				self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
+				self.bottomHeight.constant = self.keyboardHeight
 			}
 		}
 		
@@ -87,20 +93,20 @@ extension ContainerViewController: InputViewControllerDelegate {
 //		}
 	}
 	
-	func didCalculateNewHeight(input: InputViewController, height: CGFloat) {
+//	func didCalculateNewHeight(input: InputViewController, height: CGFloat) {
+////		if input.isEqual(titleInput) {
+////			titleHeight.constant = height
+////		} else if input.isEqual(detailInput) {
+////			detailHeight.constant = height
+////		}
+//		let maxHeight = scrollView.bounds.size.height - keyboardHeight
+//		input.setScroll(enabled: height >= maxHeight)
 //		if input.isEqual(titleInput) {
-//			titleHeight.constant = height
+//			titleHeight.constant = min(height, maxHeight)
 //		} else if input.isEqual(detailInput) {
-//			detailHeight.constant = height
+//			detailHeight.constant = min(height, maxHeight)
 //		}
-		let maxHeight = scrollView.bounds.size.height - keyboardHeight
-		input.setScroll(enabled: height >= maxHeight)
-		if input.isEqual(titleInput) {
-			titleHeight.constant = min(height, maxHeight)
-		} else if input.isEqual(detailInput) {
-			detailHeight.constant = min(height, maxHeight)
-		}
-	}
+//	}
 }
 
 extension ContainerViewController {
@@ -108,7 +114,7 @@ extension ContainerViewController {
 	@objc func keyboardWillShow(notification: NSNotification) {
 		guard let keyboard = try? Keyboard.keyboardData(notification: notification) else { return }
 		
-		keyboardHeight = keyboard.height - 34
+		keyboardHeight = keyboard.height
 //		let maxHeight = scrollView.bounds.size.height - keyboardHeight
 //
 //		if titleInput.isActive() {
