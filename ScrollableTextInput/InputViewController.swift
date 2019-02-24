@@ -11,13 +11,11 @@ import UIKit
 protocol InputViewControllerDelegate: class {
 	func didBecomeActive(input: InputViewController)
 	func didResignActive(input: InputViewController)
-//	func didCalculateNewHeight(input: InputViewController, height: CGFloat)
 }
 
 final class InputViewController: UIViewController {
 	@IBOutlet weak var textView: UITextView!
 	weak var delegate: InputViewControllerDelegate?
-//	private var firstUpdate = true
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -29,16 +27,8 @@ final class InputViewController: UIViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		preferredContentSize = CGSize(width: view.frame.size.width, height: textHeight())
-//		if firstUpdate {
-//			firstUpdate = false
-//			delegate?.didCalculateNewHeight(input: self, height: textHeight())
-//		}
 	}
-	
-//	func setScroll(enabled: Bool) {
-//		textView.isScrollEnabled = enabled
-//	}
-//
+
 //	func isActive() -> Bool {
 //		return textView.isFirstResponder
 //	}

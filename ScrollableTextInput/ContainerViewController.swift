@@ -61,13 +61,13 @@ extension ContainerViewController: InputViewControllerDelegate {
 	func didBecomeActive(input: InputViewController) {
 		
 		if input.isEqual(titleInput) {
-			let bottom = self.keyboardHeight - detailHeight.constant
+			let bottom = keyboardHeight - detailHeight.constant - bottomHeight.constant
 			UIView.animate(withDuration: 0.25) {
 				self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
 			}
 		} else if input.isEqual(detailInput) {
-			let top = -self.titleHeight.constant
-			let bottom = self.keyboardHeight
+			let top = -titleHeight.constant
+			let bottom = keyboardHeight - bottomHeight.constant
 			UIView.animate(withDuration: 0.25) {
 				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
 			}
@@ -78,28 +78,7 @@ extension ContainerViewController: InputViewControllerDelegate {
 		UIView.animate(withDuration: 0.25) {
 			self.scrollView.contentInset = UIEdgeInsets()
 		}
-		
-//		if input.isEqual(titleInput) {
-//			titleHeight.constant = input.preferredContentSize.height
-//		} else if input.isEqual(detailInput) {
-//			detailHeight.constant = input.preferredContentSize.height
-//		}
 	}
-	
-//	func didCalculateNewHeight(input: InputViewController, height: CGFloat) {
-////		if input.isEqual(titleInput) {
-////			titleHeight.constant = height
-////		} else if input.isEqual(detailInput) {
-////			detailHeight.constant = height
-////		}
-//		let maxHeight = scrollView.bounds.size.height - keyboardHeight
-//		input.setScroll(enabled: height >= maxHeight)
-//		if input.isEqual(titleInput) {
-//			titleHeight.constant = min(height, maxHeight)
-//		} else if input.isEqual(detailInput) {
-//			detailHeight.constant = min(height, maxHeight)
-//		}
-//	}
 }
 
 extension ContainerViewController {
@@ -108,49 +87,9 @@ extension ContainerViewController {
 		guard let keyboard = try? Keyboard.keyboardData(notification: notification) else { return }
 		
 		keyboardHeight = keyboard.height
-		
-//		let maxHeight = scrollView.bounds.size.height - keyboardHeight
-//
-//		if titleInput.isActive() {
-//			titleHeight.constant = maxHeight
-//		} else if detailInput.isActive() {
-//			detailHeight.constant = maxHeight
-//		}
-		
-//		var top: CGFloat = 0
-//		if detailInput.isActive() {
-//			top = -self.titleHeight.constant
-//		}
-//		UIView.animate(withDuration: keyboard.duration) {
-//			self.updateViewsVisibility(isInputing: true)
-//			self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: keyboard.height, right: 0)
-//		}
 	}
 	
 	@objc func keyboardWillHide(notification: NSNotification) {
-//		guard let keyboard = try? Keyboard.keyboardData(notification: notification) else { return }
 		keyboardHeight = 0
-		
-//		UIView.animate(withDuration: keyboard.duration) {
-//			self.updateViewsVisibility()
-//			self.scrollView.contentInset = UIEdgeInsets()
-//		}
 	}
-	
-//	private func updateViewsVisibility(isInputing: Bool = false) {
-//		if titleInput.isActive() && isInputing {
-//			bottomView.alpha = 0
-//			titleInput.view.alpha = 1
-//			detailInput.view.alpha = 0
-//		} else if detailInput.isActive() && isInputing {
-//			bottomView.alpha = 0
-//			titleInput.view.alpha = 0
-//			detailInput.view.alpha = 1
-//		} else {
-//			bottomView.alpha = 1
-//			titleInput.view.alpha = 1
-//			detailInput.view.alpha = 1
-//		}
-//	}
-
 }
