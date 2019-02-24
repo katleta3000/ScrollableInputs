@@ -60,28 +60,21 @@ extension ContainerViewController: InputViewControllerDelegate {
 	
 	func didBecomeActive(input: InputViewController) {
 		
-		if input.isEqual(detailInput) {
-			let top = -self.titleHeight.constant
-			UIView.animate(withDuration: 0.25) {
-				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
-			}
-		} else if input.isEqual(titleInput) {
-			let bottom: CGFloat = 0
+		if input.isEqual(titleInput) {
+			let bottom = self.keyboardHeight - detailHeight.constant
 			UIView.animate(withDuration: 0.25) {
 				self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
-				self.bottomHeight.constant = self.keyboardHeight
+			}
+		} else if input.isEqual(detailInput) {
+			let top = -self.titleHeight.constant
+			let bottom = self.keyboardHeight
+			UIView.animate(withDuration: 0.25) {
+				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
 			}
 		}
-		
-//		if input.isEqual(titleInput) {
-//			titleHeight.constant = view.frame.size.height - keyboardHeight
-//		} else if input.isEqual(detailInput) {
-//			detailHeight.constant = view.frame.size.height - keyboardHeight
-//		}
 	}
 	
 	func didResignActive(input: InputViewController) {
-		scrollView.isScrollEnabled = true
 		UIView.animate(withDuration: 0.25) {
 			self.scrollView.contentInset = UIEdgeInsets()
 		}
@@ -115,6 +108,7 @@ extension ContainerViewController {
 		guard let keyboard = try? Keyboard.keyboardData(notification: notification) else { return }
 		
 		keyboardHeight = keyboard.height
+		
 //		let maxHeight = scrollView.bounds.size.height - keyboardHeight
 //
 //		if titleInput.isActive() {
