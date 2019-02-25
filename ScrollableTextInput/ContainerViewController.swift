@@ -17,6 +17,7 @@ final class ContainerViewController: UIViewController {
 	
 	private weak var titleInput: InputViewController!
 	private weak var detailInput: InputViewController!
+	private weak var activeInput: InputViewController?
 	
 	private var keyboardHeight: CGFloat = 0
 }
@@ -60,23 +61,49 @@ extension ContainerViewController: InputViewControllerDelegate {
 	
 	func didBecomeActive(input: InputViewController) {
 		
+		activeInput = input
+		
 		if input.isEqual(titleInput) {
 			let bottom = keyboardHeight - detailHeight.constant - bottomHeight.constant
 			UIView.animate(withDuration: 0.25) {
 				self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
+				self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
 			}
 		} else if input.isEqual(detailInput) {
 			let top = -titleHeight.constant
 			let bottom = keyboardHeight - bottomHeight.constant
 			UIView.animate(withDuration: 0.25) {
 				self.scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
+				self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset
 			}
 		}
 	}
 	
 	func didResignActive(input: InputViewController) {
+		
+		activeInput = nil
+		
 		UIView.animate(withDuration: 0.25) {
 			self.scrollView.contentInset = UIEdgeInsets()
+			self.scrollView.scrollIndicatorInsets = UIEdgeInsets()
+		}
+	}
+	
+	func changedCursorRect(input: InputViewController, rect: CGRect) {
+		guard let input = activeInput else { return }
+		guard rect.origin.y > 0 else { return }
+		var dif: CGFloat = 0
+		if input.isEqual(titleInput) {
+			dif = scrollView.bounds.size.height - keyboardHeight - rect.origin.y - rect.size.height
+		} else if input.isEqual(detailInput) {
+			dif = titleHeight.constant + scrollView.bounds.size.height - keyboardHeight - rect.origin.y - rect.size.height - titleHeight.constant
+		}
+		
+		if (dif < 0) {
+			if input.isEqual(detailInput) {
+				dif -= titleHeight.constant
+			}
+			scrollView.setContentOffset(CGPoint(x: 0, y: -dif), animated: false)
 		}
 	}
 }
@@ -85,7 +112,6 @@ extension ContainerViewController {
 	
 	@objc func keyboardWillShow(notification: NSNotification) {
 		guard let keyboard = try? Keyboard.keyboardData(notification: notification) else { return }
-		
 		keyboardHeight = keyboard.height
 	}
 	

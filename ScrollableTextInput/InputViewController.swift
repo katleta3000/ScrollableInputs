@@ -11,6 +11,7 @@ import UIKit
 protocol InputViewControllerDelegate: class {
 	func didBecomeActive(input: InputViewController)
 	func didResignActive(input: InputViewController)
+	func changedCursorRect(input: InputViewController, rect: CGRect)
 }
 
 final class InputViewController: UIViewController {
@@ -23,10 +24,11 @@ final class InputViewController: UIViewController {
 		textView.text = "Input your value here"
 		textView.isScrollEnabled = false
 	}
-	
+
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		preferredContentSize = CGSize(width: view.frame.size.width, height: textHeight())
+		delegate?.changedCursorRect(input: self, rect: cursorRect())
 	}
 
 //	func isActive() -> Bool {
@@ -45,10 +47,6 @@ extension InputViewController: UITextViewDelegate {
 		return true
 	}
 	
-//	func textViewDidChange(_ textView: UITextView) {
-//		delegate?.didCalculateNewHeight(input: self, height: textHeight())
-//	}
-	
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		delegate?.didBecomeActive(input: self)
 	}
@@ -64,5 +62,12 @@ extension InputViewController {
 		let width = textView.frame.size.width
 		let size = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
 		return size.height
+	}
+	
+	func cursorRect() -> CGRect {
+		if let position = textView.selectedTextRange?.end {
+			return textView.caretRect(for: position)
+		}
+		return CGRect()
 	}
 }
