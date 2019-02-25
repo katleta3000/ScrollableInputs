@@ -92,18 +92,19 @@ extension ContainerViewController: InputViewControllerDelegate {
 	func changedCursorRect(input: InputViewController, rect: CGRect) {
 		guard let input = activeInput else { return }
 		guard rect.origin.y > 0 else { return }
-		var dif: CGFloat = 0
 		if input.isEqual(titleInput) {
-			dif = scrollView.bounds.size.height - keyboardHeight - rect.origin.y - rect.size.height
-		} else if input.isEqual(detailInput) {
-			dif = titleHeight.constant + scrollView.bounds.size.height - keyboardHeight - rect.origin.y - rect.size.height - titleHeight.constant
-		}
-		
-		if (dif < 0) {
-			if input.isEqual(detailInput) {
-				dif -= titleHeight.constant
+			// Find offset (or difference) between cursor rect and visible area.
+			let dif = scrollView.bounds.size.height - keyboardHeight - rect.origin.y - rect.size.height
+			// If offset is negative then we apply addition scroll. But it will cause always autoscrolling to the line which contains the cursor. But there are situations when we edit lines that are visible, but we have already offset – so we need to add scrollView.contentOffset.y. So now we'll apply autoscroll only when the newline goes behind the keyboard
+			if (scrollView.contentOffset.y + dif < 0) {
+				scrollView.setContentOffset(CGPoint(x: 0, y: -dif), animated: false)
 			}
-			scrollView.setContentOffset(CGPoint(x: 0, y: -dif), animated: false)
+		} else if input.isEqual(detailInput) {
+			// Logic is the same here, but we need also to consider the height of content upper then our control. (Substract it from difference and additional scroll size).
+			let dif = titleHeight.constant + scrollView.bounds.size.height - keyboardHeight - rect.origin.y - rect.size.height - titleHeight.constant
+			if (scrollView.contentOffset.y + dif - titleHeight.constant < 0) {
+				scrollView.setContentOffset(CGPoint(x: 0, y: -(dif - titleHeight.constant)), animated: false)
+			}
 		}
 	}
 }
