@@ -30,10 +30,6 @@ final class InputViewController: UIViewController {
 		preferredContentSize = CGSize(width: view.frame.size.width, height: textHeight())
 		delegate?.changedCursorRect(input: self, rect: cursorRect())
 	}
-
-//	func isActive() -> Bool {
-//		return textView.isFirstResponder
-//	}
 }
 
 extension InputViewController: UITextViewDelegate {
@@ -53,6 +49,10 @@ extension InputViewController: UITextViewDelegate {
 	
 	func textViewDidEndEditing(_ textView: UITextView) {
 		delegate?.didResignActive(input: self)
+	}
+	
+	func textViewDidChangeSelection(_ textView: UITextView) {
+		delegate?.changedCursorRect(input: self, rect: cursorRect())
 	}
 }
 
