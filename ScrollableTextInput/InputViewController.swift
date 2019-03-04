@@ -45,6 +45,7 @@ extension InputViewController: UITextViewDelegate {
 	
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		delegate?.didBecomeActive(input: self)
+		delegate?.changedCursorRect(input: self, rect: cursorRect())
 	}
 	
 	func textViewDidEndEditing(_ textView: UITextView) {
